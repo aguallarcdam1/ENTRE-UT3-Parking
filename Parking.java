@@ -194,7 +194,10 @@ public class Parking
                     break;
         }
         
-        
+        if (importeMaximoComercial < importe){
+         clientesMaximoComercial = cliente;
+         importeMaximoComercial = importe;
+        }
 
 
     }
@@ -210,17 +213,35 @@ public class Parking
         System.out.println("Importe toral entre todos los clientes: " + importeTotal + "€");
         System.out.println("Nº clientes tarifa de regular: " + regular);
         System.out.println("Nº clientes tarifa de comercial: " + comercial);
-        
+        System.out.println("Cliente tarifa Comercial con factura máxima fue el nº " + clientesMaximoComercial);
+        System.out.println("y pagó " + importeMaximoComercial + "€");
         System.out.println("************************************");
         
-
     }
 
     /**
      *  Calcula y devuelve un String que representa el nombre del día
      *  en el que más clientes han utilizado el parking - "SÁBADO"   "DOMINGO" o  "LUNES"
      */
-    public void diaMayorNumeroClientes() {
+    public String diaMayorNumeroClientes() {
+        String dia = "";
+        int max = 0;
+        
+        if (max < clientesLunes){
+          dia = "Lunes";
+          max = clientesLunes;
+        }
+        
+        if (max < clientesSabado){
+          dia = "Sábado";
+          max = clientesLunes;
+        }
+        
+        if (max < clientesDomingo){
+          dia = "Domingo";
+          max = clientesLunes;
+        }
+        return dia;
 
     }
 }
