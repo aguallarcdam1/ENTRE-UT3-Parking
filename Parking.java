@@ -7,25 +7,27 @@
  * tarifa más económica
  * (leer enunciado)
  * 
+ * @author - Andrés Guallar Chamorro
+ * 
  */
 public class Parking
 {
     private final char REGULAR = 'R';
     private final char COMERCIAL  = 'C';
-    
+
     private final double PRECIO_BASE_REGULAR = 2.0;
     private final double PRECIO_MEDIA_REGULAR_HASTA11 = 3.0;
     private final double PRECIO_MEDIA_REGULAR_DESPUES11 = 5.0;
-    
+
     private final int HORA_INICIO_ENTRADA_TEMPRANA = 6 * 60;
     private final int HORA_FIN_ENTRADA_TEMPRANA = 8 * 60 + 30;
     private final int HORA_INICIO_SALIDA_TEMPRANA = 15 * 60;
     private final int HORA_FIN_SALIDA_TEMPRANA = 18 * 60;
-    
+
     private final double PRECIO_TARIFA_PLANA_REGULAR = 15.0;
     private final double PRECIO_PRIMERAS3_COMERCIAL = 5.00;
     private final double PRECIO_MEDIA_COMERCIAL = 3.00;
-    
+
     private String nombre;
     private int cliente;
     private double importeTotal;
@@ -36,6 +38,7 @@ public class Parking
     private int clientesDomingo;
     private int clientesMaximoComercial;
     private double importeMaximoComercial;
+
     /**
      * Inicializa el parking con el nombre indicada por el parámetro.
      * El resto de atributos se inicializan a 0 
@@ -53,6 +56,7 @@ public class Parking
         importeMaximoComercial = 0;
 
     }
+    //Accesor
 
     /**
      * accesor para el nombre del parking
@@ -63,6 +67,7 @@ public class Parking
         return nombre;        
 
     }
+    //Mutador
 
     /**
      * mutador para el nombre del parking
@@ -73,6 +78,7 @@ public class Parking
         nombre = queNombre;
 
     }
+    //Método facturarCliente
 
     /**
      *  Recibe cuatro parámetros que supondremos correctos:
@@ -102,11 +108,9 @@ public class Parking
 
         int horasEntrada = entrada / 100;
         int minutosEntrada = entrada % 100;
-        //String horaEntrada = horasEntrada + ":" + minutosEntrada;
 
         int horasSalida = salida / 100;
         int minutosSalida = salida % 100;
-        //String horaSalida = horasSalida + ":" + minutosSalida;
 
         int pasoMinEntrada = horasEntrada * 60 + minutosEntrada;
         int pasoMinSalida = horasSalida * 60 + minutosSalida;
@@ -136,6 +140,8 @@ public class Parking
                 importe = PRECIO_TARIFA_PLANA_REGULAR;
 
                 tarifa = "Regular y Temprana";
+                
+                regular++;
 
             }
             else {
@@ -172,7 +178,7 @@ public class Parking
             }
             break;
         }
-        
+
         System.out.println();
         System.out.println("************************************"); 
         System.out.println("Cliente nº: " + cliente);
@@ -182,25 +188,25 @@ public class Parking
         System.out.println("Importe a pagar: " + importe + "€");
         System.out.println("************************************");
         System.out.println();
-        
+
         importeTotal += importe;
-        
+
         switch (dia){
-           case 1 : clientesLunes++;
-                    break;
-           case 6 : clientesSabado++;
-                    break;
-           case 7 : clientesDomingo++;
-                    break;
-        }
-        
-        if (importeMaximoComercial < importe){
-         clientesMaximoComercial = cliente;
-         importeMaximoComercial = importe;
+            case 1 : clientesLunes++;
+            break;
+            case 6 : clientesSabado++;
+            break;
+            case 7 : clientesDomingo++;
+            break;
         }
 
+        if (importeMaximoComercial < importe){
+            clientesMaximoComercial = cliente;
+            importeMaximoComercial = importe;
+        }
 
     }
+    //Método imprimir estadísticas
 
     /**
      * Muestra en pantalla las estadísticcas sobre el parking  
@@ -216,7 +222,7 @@ public class Parking
         System.out.println("Cliente tarifa Comercial con factura máxima fue el nº " + clientesMaximoComercial);
         System.out.println("y pagó " + importeMaximoComercial + "€");
         System.out.println("************************************");
-        
+
     }
 
     /**
@@ -224,24 +230,16 @@ public class Parking
      *  en el que más clientes han utilizado el parking - "SÁBADO"   "DOMINGO" o  "LUNES"
      */
     public String diaMayorNumeroClientes() {
-        String dia = "";
-        int max = 0;
-        
-        if (max < clientesLunes){
-          dia = "Lunes";
-          max = clientesLunes;
+
+        if (clientesSabado > clientesDomingo && clientesSabado > clientesLunes){
+            return "SABADO";
         }
-        
-        if (max < clientesSabado){
-          dia = "Sábado";
-          max = clientesLunes;
+        else if (clientesDomingo > clientesLunes){
+            return "DOMINGO";
         }
-        
-        if (max < clientesDomingo){
-          dia = "Domingo";
-          max = clientesLunes;
+        else{
+            return "LUNES";
         }
-        return dia;
 
     }
 }
